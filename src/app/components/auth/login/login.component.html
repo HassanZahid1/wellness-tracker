@@ -19,9 +19,9 @@
         <label>Password</label>
         <input type="password" formControlName="password" placeholder="••••••••" />
       </div>
-      <div class="forgot-row">
+      <!-- <div class="forgot-row">
         <a class="forgot-link" href="#">Forgot password?</a>
-      </div>
+      </div> -->
       <div *ngIf="error" class="error">{{ error }}</div>
       <button class="login-btn" type="submit" [disabled]="loading">
         {{ loading ? 'Logging in...' : 'Login' }}
