@@ -1,0 +1,121 @@
+<div class="mood-main">
+  <div class="mood-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-icon class="header-icon">sentiment_satisfied</mat-icon>
+        <h2>Mood Tracker</h2>
+        <p class="subtitle">Track your daily emotional well-being</p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-value">{{ getTodayMood() }}</span>
+          <span class="stat-label">Today's Mood</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ getAverageMood() }}</span>
+          <span class="stat-label">Weekly Avg</span>
+        </div>
+        <div class="mood-indicator">
+          <div class="mood-emoji">{{ getTodayMoodEmoji() }}</div>
+          <span class="mood-label">{{ getTodayMoodLabel() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-mood-card">
+    <h3>Log Your Mood</h3>
+    <form [formGroup]="form" (ngSubmit)="setMood()" class="add-form">
+      <div class="input-group">
+        <mat-form-field appearance="outline">
+          <mat-label>How are you feeling today?</mat-label>
+          <mat-select formControlName="value">
+            <mat-option *ngFor="let mood of moodOptions" [value]="mood.value">
+              <div class="mood-option">
+                <span class="mood-emoji">{{ mood.label.split(' ')[0] }}</span>
+                <span class="mood-text">{{ mood.label.split(' ').slice(1).join(' ') }}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="add-button">
+          <mat-icon>sentiment_satisfied</mat-icon>
+          Log Mood
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="mood-history-card">
+    <div class="card-header">
+      <h3>Mood History</h3>
+      <div class="view-toggle">
+        <button mat-button [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <mat-icon>table_chart</mat-icon>
+        </button>
+        <!-- <button mat-button [class.active]="viewMode === 'cards'" (click)="viewMode = 'cards'">
+          <mat-icon>view_module</mat-icon>
+        </button> -->
+      </div>
+    </div>
+
+    <div class="history-content" [ngClass]="viewMode">
+      <!-- Table View -->
+      <div class="table-view" *ngIf="viewMode === 'table'">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Mood</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of days">
+              <td>{{ day.date | date:'EEE, MMM d' }}</td>
+              <td>
+                <div class="mood-display">
+                  <span class="mood-emoji">{{ getMoodEmoji(day.mood) }}</span>
+                  <span class="mood-text">{{ getMoodLabel(day.mood) }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="rating-display">
+                  <span class="rating-value">{{ day.mood }}/5</span>
+                  <div class="rating-stars">
+                    <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                             [class.filled]="star <= day.mood"
+                             [class.empty]="star > day.mood">
+                      {{ star <= day.mood ? 'star' : 'star_border' }}
+                    </mat-icon>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card View -->
+      <div class="card-view" *ngIf="viewMode === 'cards'">
+        <div class="day-card" *ngFor="let day of days">
+          <div class="card-date">{{ day.date | date:'EEE' }}</div>
+          <div class="card-mood">
+            <span class="mood-emoji-large">{{ getMoodEmoji(day.mood) }}</span>
+            <span class="mood-label">{{ getMoodLabel(day.mood) }}</span>
+          </div>
+          <div class="card-rating">
+            <div class="rating-stars">
+              <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                       [class.filled]="star <= day.mood"
+                       [class.empty]="star > day.mood">
+                {{ star <= day.mood ? 'star' : 'star_border' }}
+              </mat-icon>
+            </div>
+            <span class="rating-text">{{ day.mood }}/5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

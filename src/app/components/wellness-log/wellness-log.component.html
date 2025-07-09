@@ -1,0 +1,119 @@
+<div class="wellness-log-container">
+  <div class="page-header">
+    <h1>Log Wellness Activity</h1>
+    <p>Track your daily wellness activities and progress</p>
+  </div>
+
+  <div class="content-grid">
+    <!-- Log Activity Form -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title>Log New Activity</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="wellnessForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Activity Type</mat-label>
+              <mat-select formControlName="activityType">
+                <mat-option value="steps">Steps</mat-option>
+                <mat-option value="water">Water Intake</mat-option>
+                <mat-option value="sleep">Sleep Hours</mat-option>
+                <mat-option value="mood">Mood</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput type="number" formControlName="value" 
+                     [placeholder]="wellnessForm.get('activityType')?.value === 'mood' ? 'Select mood' : 'Enter value'">
+              <mat-hint *ngIf="wellnessForm.get('activityType')?.value === 'mood'">
+                Select mood level
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" *ngIf="wellnessForm.get('activityType')?.value === 'mood'">
+              <mat-label>Mood Level</mat-label>
+              <mat-select formControlName="value">
+                <mat-option value="excellent">Excellent</mat-option>
+                <mat-option value="good">Good</mat-option>
+                <mat-option value="neutral">Neutral</mat-option>
+                <mat-option value="bad">Bad</mat-option>
+                <mat-option value="terrible">Terrible</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes (Optional)</mat-label>
+            <textarea matInput formControlName="notes" rows="3" 
+                      placeholder="Add any additional notes about your activity..."></textarea>
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" 
+                    [disabled]="!wellnessForm.valid">
+              <mat-icon>add</mat-icon>
+              Log Activity
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Activities -->
+    <mat-card class="activities-card">
+      <mat-card-header>
+        <mat-card-title>Recent Activities</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activities-list" *ngIf="activities.length > 0; else noActivities">
+          <div class="activity-item" *ngFor="let activity of activities">
+            <div class="activity-icon">
+              <mat-icon [style.color]="getActivityColor(activity.activityType)">
+                {{ getActivityIcon(activity.activityType) }}
+              </mat-icon>
+            </div>
+            <div class="activity-details">
+              <div class="activity-header">
+                <span class="activity-type">{{ activity.activityType | titlecase }}</span>
+                <span class="activity-value">
+                  {{ activity.value }}{{ getActivityUnit(activity.activityType) }}
+                </span>
+              </div>
+              <div class="activity-meta">
+                <span class="activity-date">{{ activity.date | date:'MMM d, y' }}</span>
+                <span class="activity-time">{{ activity.timestamp | date:'shortTime' }}</span>
+              </div>
+              <div class="activity-notes" *ngIf="activity.notes">
+                {{ activity.notes }}
+              </div>
+            </div>
+            <div class="activity-actions">
+              <button mat-icon-button color="warn" (click)="deleteActivity(activity.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noActivities>
+          <div class="no-activities">
+            <mat-icon>fitness_center</mat-icon>
+            <p>No activities logged yet</p>
+            <p class="subtitle">Start by logging your first wellness activity above</p>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

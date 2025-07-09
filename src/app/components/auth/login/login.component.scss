@@ -1,0 +1,138 @@
+.login-bg {
+  min-height: 100vh;
+  background: #f7f8fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(80, 80, 180, 0.08);
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-icon {
+  background: #7579fa;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -48px;
+  margin-bottom: 12px;
+}
+.star {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3a4256;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.login-tabs {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.tab {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7579fa;
+  padding: 0.5rem 2rem;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tab.active {
+  background: #7579fa;
+  color: #fff;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+label {
+  font-size: 1rem;
+  color: #3a4256;
+  margin-bottom: 0.25rem;
+}
+input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e3eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+input:focus {
+  border-color: #7579fa;
+}
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.forgot-link {
+  color: #7579fa;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+.error {
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.login-btn {
+  width: 100%;
+  background: #7579fa;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 0;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:disabled {
+  background: #b3b6f7;
+  cursor: not-allowed;
+}
+.login-footer {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #b0b3c7;
+  text-align: center;
+}

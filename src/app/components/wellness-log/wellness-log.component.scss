@@ -1,0 +1,219 @@
+.wellness-log-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    margin: 0;
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 300;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 8px 0 0 0;
+  }
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+// Form Card
+.form-card {
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+
+      mat-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+// Activities Card
+.activities-card {
+  .activities-list {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f9f9f9;
+    }
+
+    .activity-icon {
+      flex-shrink: 0;
+      
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .activity-details {
+      flex: 1;
+      min-width: 0;
+
+      .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+
+        .activity-type {
+          font-weight: 600;
+          color: #333;
+          font-size: 1rem;
+        }
+
+        .activity-value {
+          font-weight: 600;
+          color: #666;
+          font-size: 0.875rem;
+        }
+      }
+
+      .activity-meta {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 8px;
+
+        .activity-date,
+        .activity-time {
+          font-size: 0.75rem;
+          color: #999;
+        }
+      }
+
+      .activity-notes {
+        font-size: 0.875rem;
+        color: #666;
+        line-height: 1.4;
+        font-style: italic;
+      }
+    }
+
+    .activity-actions {
+      flex-shrink: 0;
+    }
+  }
+}
+
+.no-activities {
+  text-align: center;
+  padding: 48px 24px;
+  color: #999;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .wellness-log-container {
+    padding: 16px;
+  }
+
+  .page-header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .form-card .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .wellness-log-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    h1 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .activity-item {
+    flex-direction: column;
+    gap: 12px;
+
+    .activity-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .activity-meta {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+}

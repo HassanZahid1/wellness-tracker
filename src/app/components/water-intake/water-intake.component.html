@@ -1,0 +1,108 @@
+<div class="water-intake-main">
+  <div class="water-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-icon class="header-icon">water_drop</mat-icon>
+        <h2>Water Intake Tracker</h2>
+        <p class="subtitle">Stay hydrated throughout the day</p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-value">{{ getTodayWater() }}</span>
+          <span class="stat-label">Today (glasses)</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ waterGoal }}</span>
+          <span class="stat-label">Goal (glasses)</span>
+        </div>
+        <div class="progress-ring">
+          <div class="progress-circle" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'">
+            <div class="progress-fill" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'"></div>
+          </div>
+          <span class="progress-text">{{ getProgressPercentage() }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-water-card">
+    <h3>Add Water Intake</h3>
+    <form [formGroup]="form" (ngSubmit)="addWater()" class="add-form">
+      <div class="input-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Water Amount (glasses)</mat-label>
+          <input matInput type="number" formControlName="value" min="0.1" step="0.1" placeholder="1.0">
+          <mat-icon matSuffix>water_drop</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="add-button">
+          <mat-icon>add</mat-icon>
+          Add Water
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="water-history-card">
+    <div class="card-header">
+      <h3>Water Intake History</h3>
+      <div class="view-toggle">
+        <button mat-button [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <mat-icon>table_chart</mat-icon>
+        </button>
+        <!-- <button mat-button [class.active]="viewMode === 'cards'" (click)="viewMode = 'cards'">
+          <mat-icon>view_module</mat-icon>
+        </button> -->
+      </div>
+    </div>
+
+    <div class="history-content" [ngClass]="viewMode">
+      <!-- Table View -->
+      <div class="table-view" *ngIf="viewMode === 'table'">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Water</th>
+              <th>Goal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of days" [ngClass]="{'goal-met-row': day.water >= waterGoal}">
+              <td>{{ day.date | date:'EEE, MMM d' }}</td>
+              <td>
+                <span class="water-value" [ngClass]="{'goal-met': day.water >= waterGoal}">
+                  {{ day.water | number:'1.0-1' }} glasses
+                </span>
+              </td>
+              <td>{{ waterGoal }} glasses</td>
+              <td>
+                <div class="status-indicator" [ngClass]="{'met': day.water >= waterGoal, 'missed': day.water < waterGoal}">
+                  <mat-icon *ngIf="day.water >= waterGoal">check_circle</mat-icon>
+                  <mat-icon *ngIf="day.water < waterGoal">schedule</mat-icon>
+                  <span>{{ day.water >= waterGoal ? 'Goal Met' : 'Goal Missed' }}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card View -->
+      <div class="card-view" *ngIf="viewMode === 'cards'">
+        <div class="day-card" *ngFor="let day of days" [ngClass]="{'goal-met': day.water >= waterGoal}">
+          <div class="card-date">{{ day.date | date:'EEE' }}</div>
+          <div class="card-value">
+            <span class="water-amount">{{ day.water | number:'1.0-1' }}</span>
+            <span class="unit">glasses</span>
+          </div>
+          <div class="card-goal">Goal: {{ waterGoal }} glasses</div>
+          <div class="card-status">
+            <mat-icon *ngIf="day.water >= waterGoal" class="success-icon">check_circle</mat-icon>
+            <mat-icon *ngIf="day.water < waterGoal" class="pending-icon">schedule</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

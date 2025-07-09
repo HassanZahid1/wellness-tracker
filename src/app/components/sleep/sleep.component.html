@@ -1,0 +1,108 @@
+<div class="sleep-main">
+  <div class="sleep-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-icon class="header-icon">bedtime</mat-icon>
+        <h2>Sleep Tracker</h2>
+        <p class="subtitle">Monitor your sleep patterns and quality</p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-value">{{ getTodaySleep() }}</span>
+          <span class="stat-label">Today (hrs)</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ sleepGoal }}</span>
+          <span class="stat-label">Goal (hrs)</span>
+        </div>
+        <div class="progress-ring">
+          <div class="progress-circle" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'">
+            <div class="progress-fill" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'"></div>
+          </div>
+          <span class="progress-text">{{ getProgressPercentage() }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-sleep-card">
+    <h3>Log Sleep</h3>
+    <form [formGroup]="form" (ngSubmit)="setSleep()" class="add-form">
+      <div class="input-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Sleep Duration (hours)</mat-label>
+          <input matInput type="number" formControlName="value" min="0.5" max="24" step="0.5" placeholder="8.0">
+          <mat-icon matSuffix>schedule</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="add-button">
+          <mat-icon>bedtime</mat-icon>
+          Log Sleep
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="sleep-history-card">
+    <div class="card-header">
+      <h3>Sleep History</h3>
+      <div class="view-toggle">
+        <button mat-button [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <mat-icon>table_chart</mat-icon>
+        </button>
+        <!-- <button mat-button [class.active]="viewMode === 'cards'" (click)="viewMode = 'cards'">
+          <mat-icon>view_module</mat-icon>
+        </button> -->
+      </div>
+    </div>
+
+    <div class="history-content" [ngClass]="viewMode">
+      <!-- Table View -->
+      <div class="table-view" *ngIf="viewMode === 'table'">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Sleep</th>
+              <th>Goal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of days" [ngClass]="{'goal-met-row': day.sleep >= sleepGoal}">
+              <td>{{ day.date | date:'EEE, MMM d' }}</td>
+              <td>
+                <span class="sleep-value" [ngClass]="{'goal-met': day.sleep >= sleepGoal}">
+                  {{ day.sleep | number:'1.0-1' }} hrs
+                </span>
+              </td>
+              <td>{{ sleepGoal }} hrs</td>
+              <td>
+                <div class="status-indicator" [ngClass]="{'met': day.sleep >= sleepGoal, 'missed': day.sleep < sleepGoal}">
+                  <mat-icon *ngIf="day.sleep >= sleepGoal">check_circle</mat-icon>
+                  <mat-icon *ngIf="day.sleep < sleepGoal">schedule</mat-icon>
+                  <span>{{ day.sleep >= sleepGoal ? 'Goal Met' : 'Goal Missed' }}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card View -->
+      <div class="card-view" *ngIf="viewMode === 'cards'">
+        <div class="day-card" *ngFor="let day of days" [ngClass]="{'goal-met': day.sleep >= sleepGoal}">
+          <div class="card-date">{{ day.date | date:'EEE' }}</div>
+          <div class="card-value">
+            <span class="sleep-amount">{{ day.sleep | number:'1.0-1' }}</span>
+            <span class="unit">hrs</span>
+          </div>
+          <div class="card-goal">Goal: {{ sleepGoal }} hrs</div>
+          <div class="card-status">
+            <mat-icon *ngIf="day.sleep >= sleepGoal" class="success-icon">check_circle</mat-icon>
+            <mat-icon *ngIf="day.sleep < sleepGoal" class="pending-icon">schedule</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

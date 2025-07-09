@@ -1,0 +1,285 @@
+.settings-main {
+  padding: 40px 48px 32px 48px;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.settings-header {
+  text-align: center;
+  margin-bottom: 40px;
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+  }
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: none;
+  
+  mat-card-header {
+    padding: 24px 24px 16px 24px;
+    
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #222;
+      
+      mat-icon {
+        color: #4285f4;
+        font-size: 1.8rem;
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+    }
+    
+    mat-card-subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-top: 4px;
+    }
+  }
+  
+  mat-card-content {
+    padding: 0 24px 24px 24px;
+  }
+  
+  mat-card-actions {
+    padding: 16px 24px 24px 24px;
+    gap: 12px;
+  }
+}
+
+.goals-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.goal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.goal-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    color: white;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  &.water {
+    background: linear-gradient(135deg, #4285f4, #34a853);
+  }
+  
+  &.exercise {
+    background: linear-gradient(135deg, #34a853, #fbbc04);
+  }
+  
+  &.sleep {
+    background: linear-gradient(135deg, #ff6b35, #ea4335);
+  }
+  
+  &.mood {
+    background: linear-gradient(135deg, #2196f3, #21cbf3);
+  }
+}
+
+
+.goal-info {
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 4px 0;
+  }
+  
+  p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  
+  ::ng-deep .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+mat-divider {
+  margin: 8px 0;
+}
+
+.summary-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: none;
+  
+  mat-card-header {
+    padding: 20px 24px 16px 24px;
+    
+    mat-card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #222;
+    }
+  }
+  
+  mat-card-content {
+    padding: 0 24px 24px 24px;
+  }
+}
+
+.goals-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+
+
+.summary-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    color: white;
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  
+  &.water {
+    background: linear-gradient(135deg, #4285f4, #34a853);
+  }
+  
+  &.exercise {
+    background: linear-gradient(135deg, #34a853, #fbbc04);
+  }
+  
+  &.sleep {
+    background: linear-gradient(135deg, #ff6b35, #ea4335);
+  }
+  
+  &.mood {
+    background: linear-gradient(135deg, #2196f3, #21cbf3);
+  }
+}
+
+.summary-text {
+  display: flex;
+  flex-direction: column;
+  
+  .summary-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #222;
+    line-height: 1;
+  }
+  
+  .summary-unit {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 2px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .settings-main {
+    padding: 24px 16px 16px 16px;
+  }
+  
+  .settings-header h1 {
+    font-size: 2rem;
+  }
+  
+  .goals-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .goal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .summary-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+// Button styles
+button[mat-raised-button] {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 8px 24px;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+button[mat-button] {
+  border-radius: 8px;
+  font-weight: 500;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+} 

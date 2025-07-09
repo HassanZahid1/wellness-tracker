@@ -1,0 +1,255 @@
+<div class="dialog-container">
+  <div class="dialog-content">
+    <h2 class="dialog-title">Log Wellness Activity</h2>
+
+    <!-- Activity Selection -->
+    <div class="activity-tabs">
+      <button
+        *ngFor="let activity of activities"
+        class="activity-tab"
+        [class.active]="selectedActivity === activity.id"
+        (click)="selectActivity(activity.id)"
+        type="button"
+      >
+        {{ activity.name }}
+      </button>
+    </div>
+
+    <form [formGroup]="activityForm" (ngSubmit)="onSaveLog()">
+      <!-- Water Quantity Section -->
+      <div class="water-section" *ngIf="selectedActivity === 'water'">
+        <h3 class="section-title">Water Quantity</h3>
+
+        <div class="slider-container">
+          <input
+            type="range"
+            min="0.1"
+            max="5"
+            step="0.1"
+            [value]="waterQuantity"
+            (input)="onSliderChange($event)"
+            class="water-slider"
+          />
+          <div class="slider-value">{{ waterQuantity | number:'1.0-1' }} glasses</div>
+        </div>
+
+        <div class="slider-labels">
+          <span>0.1 glasses</span>
+          <span>5 glasses</span>
+        </div>
+
+        <!-- Quick Add Buttons -->
+        <div class="quick-add-buttons">
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addWaterAmount(0.5)"
+          >
+            + 0.5 glasses
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addWaterAmount(1)"
+          >
+            + 1 glass
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addWaterAmount(2)"
+          >
+            + 2 glasses
+          </button>
+        </div>
+      </div>
+
+      <!-- Exercise Quantity Section -->
+      <div class="exercise-section" *ngIf="selectedActivity === 'exercise'">
+        <h3 class="section-title">Exercise Duration</h3>
+
+        <div class="slider-container">
+          <input
+            type="range"
+            min="1"
+            max="120"
+            step="1"
+            [value]="exerciseQuantity"
+            (input)="onSliderChange($event)"
+            class="exercise-slider"
+          />
+          <div class="slider-value">{{ exerciseQuantity }} minutes</div>
+        </div>
+
+        <div class="slider-labels">
+          <span>1 minute</span>
+          <span>120 minutes</span>
+        </div>
+
+        <!-- Quick Add Buttons -->
+        <div class="quick-add-buttons">
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addExerciseAmount(10)"
+          >
+            + 10 min
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addExerciseAmount(30)"
+          >
+            + 30 min
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addExerciseAmount(60)"
+          >
+            + 60 min
+          </button>
+        </div>
+      </div>
+
+      <!-- Sleep Duration Section -->
+      <div class="sleep-section" *ngIf="selectedActivity === 'sleep'">
+        <h3 class="section-title">Sleep Duration</h3>
+
+        <div class="slider-container">
+          <input
+            type="range"
+            min="0.5"
+            max="24"
+            step="0.5"
+            [value]="sleepQuantity"
+            (input)="onSliderChange($event)"
+            class="sleep-slider"
+          />
+          <div class="slider-value">{{ sleepQuantity | number:'1.0-1' }} hours</div>
+        </div>
+
+        <div class="slider-labels">
+          <span>0.5 hours</span>
+          <span>24 hours</span>
+        </div>
+
+        <!-- Quick Add Buttons -->
+        <div class="quick-add-buttons">
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addSleepAmount(1)"
+          >
+            + 1 hour
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addSleepAmount(2)"
+          >
+            + 2 hours
+          </button>
+          <button
+            type="button"
+            class="quick-add-btn"
+            (click)="addSleepAmount(4)"
+          >
+            + 4 hours
+          </button>
+        </div>
+      </div>
+
+      <!-- Mood Rating Section -->
+      <div class="mood-section" *ngIf="selectedActivity === 'mood'">
+        <h3 class="section-title">How are you feeling?</h3>
+
+        <div class="mood-options">
+          <button
+            *ngFor="let mood of moodOptions"
+            type="button"
+            class="mood-option"
+            [class.selected]="moodQuantity === mood.value"
+            [style.border-color]="mood.color"
+            (click)="selectMood(mood.value)"
+          >
+            <div class="mood-emoji">{{ mood.label.split(' ')[0] }}</div>
+            <div class="mood-label">{{ mood.label.split(' ').slice(1).join(' ') }}</div>
+          </button>
+        </div>
+
+        <div class="selected-mood-display" *ngIf="moodQuantity > 0">
+          <div class="mood-summary">
+            <span class="mood-emoji-large">{{ getMoodLabel(moodQuantity).split(' ')[0] }}</span>
+            <span class="mood-text">{{ getMoodLabel(moodQuantity).split(' ').slice(1).join(' ') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date and Time Section -->
+      <div class="datetime-section">
+        <h3 class="section-title">Date and Time</h3>
+
+        <div class="datetime-inputs">
+          <input type="date" formControlName="date" class="date-input" />
+          <input type="time" formControlName="time" class="time-input" />
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" class="cancel-btn" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" class="save-btn" [disabled]="!activityForm.valid">
+          Save Log
+        </button>
+      </div>
+    </form>
+
+    <!-- Daily Water Intake Progress -->
+    <div class="water-progress" *ngIf="selectedActivity === 'water'">
+      <div class="progress-text">
+        Today's water intake: {{ dailyWaterIntake | number:'1.0-1' }} glasses of {{ dailyWaterGoal }} glasses
+        goal ({{ getWaterIntakePercentage() }}%)
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" [style.width.%]="getWaterProgressBarWidth()"></div>
+      </div>
+    </div>
+
+    <!-- Daily Exercise Progress -->
+    <div class="exercise-progress" *ngIf="selectedActivity === 'exercise'">
+      <div class="progress-text">
+        Today's exercise: {{ dailyExerciseIntake }} minutes of {{ dailyExerciseGoal }} minutes
+        goal ({{ getExerciseIntakePercentage() }}%)
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" [style.width.%]="getExerciseProgressBarWidth()"></div>
+      </div>
+    </div>
+
+    <!-- Daily Sleep Progress -->
+    <div class="sleep-progress" *ngIf="selectedActivity === 'sleep'">
+      <div class="progress-text">
+        Today's sleep: {{ dailySleepIntake | number:'1.0-1' }} hours of {{ dailySleepGoal }} hours
+        goal ({{ getSleepIntakePercentage() }}%)
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" [style.width.%]="getSleepProgressBarWidth()"></div>
+      </div>
+    </div>
+
+    <!-- Today's Mood -->
+    <div class="mood-progress" *ngIf="selectedActivity === 'mood'">
+      <div class="progress-text">
+        Today's mood: {{ dailyMoodIntake > 0 ? getMoodLabel(dailyMoodIntake) : 'Not set yet' }}
+      </div>
+      <div class="mood-display" *ngIf="dailyMoodIntake > 0">
+        <span class="mood-emoji-large" [style.color]="getMoodColor(dailyMoodIntake)">
+          {{ getMoodLabel(dailyMoodIntake).split(' ')[0] }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

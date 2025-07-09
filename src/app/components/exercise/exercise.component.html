@@ -1,0 +1,108 @@
+<div class="exercise-main">
+  <div class="exercise-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-icon class="header-icon">fitness_center</mat-icon>
+        <h2>Exercise Tracker</h2>
+        <p class="subtitle">Track your daily physical activity</p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-item">
+          <span class="stat-value">{{ getTodayExercise() }}</span>
+          <span class="stat-label">Today (min)</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ exerciseGoal }}</span>
+          <span class="stat-label">Goal (min)</span>
+        </div>
+        <div class="progress-ring">
+          <div class="progress-circle" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'">
+            <div class="progress-fill" [style.transform]="'rotate(' + getProgressAngle() + 'deg)'"></div>
+          </div>
+          <span class="progress-text">{{ getProgressPercentage() }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-exercise-card">
+    <h3>Add Exercise</h3>
+    <form [formGroup]="form" (ngSubmit)="addExercise()" class="add-form">
+      <div class="input-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Exercise Duration (minutes)</mat-label>
+          <input matInput type="number" formControlName="value" min="1" step="1" placeholder="30">
+          <mat-icon matSuffix>timer</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="add-button">
+          <mat-icon>add</mat-icon>
+          Add Exercise
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="exercise-history-card">
+    <div class="card-header">
+      <h3>Exercise History</h3>
+      <div class="view-toggle">
+        <button mat-button [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <mat-icon>table_chart</mat-icon>
+        </button>
+        <!-- <button mat-button [class.active]="viewMode === 'cards'" (click)="viewMode = 'cards'">
+          <mat-icon>view_module</mat-icon>
+        </button> -->
+      </div>
+    </div>
+
+    <div class="history-content" [ngClass]="viewMode">
+      <!-- Table View -->
+      <div class="table-view" *ngIf="viewMode === 'table'">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Exercise</th>
+              <th>Goal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of days" [ngClass]="{'goal-met-row': day.exercise >= exerciseGoal}">
+              <td>{{ day.date | date:'EEE, MMM d' }}</td>
+              <td>
+                <span class="exercise-value" [ngClass]="{'goal-met': day.exercise >= exerciseGoal}">
+                  {{ day.exercise | number:'1.0-0' }} min
+                </span>
+              </td>
+              <td>{{ exerciseGoal }} min</td>
+              <td>
+                <div class="status-indicator" [ngClass]="{'met': day.exercise >= exerciseGoal, 'missed': day.exercise < exerciseGoal}">
+                  <mat-icon *ngIf="day.exercise >= exerciseGoal">check_circle</mat-icon>
+                  <mat-icon *ngIf="day.exercise < exerciseGoal">schedule</mat-icon>
+                  <span>{{ day.exercise >= exerciseGoal ? 'Goal Met' : 'Goal Missed' }}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card View -->
+      <div class="card-view" *ngIf="viewMode === 'cards'">
+        <div class="day-card" *ngFor="let day of days" [ngClass]="{'goal-met': day.exercise >= exerciseGoal}">
+          <div class="card-date">{{ day.date | date:'EEE' }}</div>
+          <div class="card-value">
+            <span class="exercise-amount">{{ day.exercise | number:'1.0-0' }}</span>
+            <span class="unit">min</span>
+          </div>
+          <div class="card-goal">Goal: {{ exerciseGoal }} min</div>
+          <div class="card-status">
+            <mat-icon *ngIf="day.exercise >= exerciseGoal" class="success-icon">check_circle</mat-icon>
+            <mat-icon *ngIf="day.exercise < exerciseGoal" class="pending-icon">schedule</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

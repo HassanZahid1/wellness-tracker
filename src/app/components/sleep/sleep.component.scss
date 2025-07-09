@@ -1,0 +1,496 @@
+.sleep-main {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f8f9fd 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+.sleep-header {
+  margin-bottom: 32px;
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
+  
+  .title-section {
+    flex: 1;
+    
+    .header-icon {
+      font-size: 2.5rem;
+      color: #8b5cf6;
+      margin-bottom: 16px;
+      display: block;
+    }
+    
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 0 0 8px 0;
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: #6b7280;
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+  
+  .stats-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    min-width: 300px;
+    
+    @media (max-width: 768px) {
+      min-width: auto;
+      width: 100%;
+      gap: 24px;
+    }
+    
+    .stat-item {
+      text-align: center;
+      
+      .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        color: #8b5cf6;
+        line-height: 1;
+      }
+      
+      .stat-label {
+        font-size: 0.875rem;
+        color: #6b7280;
+        font-weight: 500;
+        margin-top: 4px;
+        display: block;
+      }
+    }
+    
+    .progress-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      
+      .progress-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: conic-gradient(#8b5cf6 0deg, #e5e7eb 0deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          background: white;
+          border-radius: 50%;
+        }
+      }
+      
+      .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        font-weight: 700;
+        color: #8b5cf6;
+      }
+    }
+  }
+}
+
+.add-sleep-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    &::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      border-radius: 2px;
+    }
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 16px;
+    align-items: flex-center;
+    
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    mat-form-field {
+      flex: 1;
+      min-width: 200px;
+      
+      ::ng-deep .mat-mdc-form-field {
+        .mat-mdc-text-field-wrapper {
+          border-radius: 12px;
+          background: #f9fafb;
+          border: 2px solid transparent;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            border-color: #8b5cf6;
+            background: white;
+          }
+          
+          &.mat-focused {
+            border-color: #8b5cf6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+          }
+        }
+      }
+    }
+    
+    .add-button {
+      background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 56px;
+      
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+      }
+      
+      &:disabled {
+        background: #e5e7eb;
+        color: #9ca3af;
+        cursor: not-allowed;
+      }
+      
+      mat-icon {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.sleep-history-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      
+      &::before {
+        content: '';
+        width: 4px;
+        height: 24px;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        border-radius: 2px;
+      }
+    }
+    
+    .view-toggle {
+      display: flex;
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 4px;
+      
+      button {
+        border-radius: 8px;
+        padding: 8px 12px;
+        border: none;
+        background: transparent;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        
+        &.active {
+          background: white;
+          color: #8b5cf6;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        &:hover:not(.active) {
+          color: #8b5cf6;
+        }
+        
+        mat-icon {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+  
+  .history-content {
+    &.table-view {
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 0;
+        /* Add horizontal gap between columns */
+        th, td {
+          border-right: 16px solid transparent;
+        }
+        
+        th {
+          background: #f9fafb;
+          color: #374151;
+          font-weight: 600;
+          font-size: 0.875rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          padding: 16px 12px;
+          text-align: left;
+          border-bottom: 2px solid #e5e7eb;
+          
+          &:first-child {
+            border-top-left-radius: 12px;
+          }
+          
+          &:last-child {
+            border-top-right-radius: 12px;
+          }
+        }
+        
+        td {
+          padding: 16px 12px;
+          border-bottom: 1px solid #f3f4f6;
+          color: #374151;
+          font-weight: 500;
+          
+          .sleep-value {
+            font-weight: 600;
+            color: #1a1a1a;
+            
+            &.goal-met {
+              color: #059669;
+            }
+          }
+          
+          .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            
+            &.met {
+              color: #059669;
+              
+              mat-icon {
+                color: #059669;
+              }
+            }
+            
+            &.missed {
+              color: #dc2626;
+              
+              mat-icon {
+                color: #dc2626;
+              }
+            }
+            
+            mat-icon {
+              font-size: 1rem;
+            }
+          }
+        }
+        
+        tr.goal-met-row {
+          background: rgba(5, 150, 105, 0.02);
+          
+          &:hover {
+            background: rgba(5, 150, 105, 0.05);
+          }
+        }
+        
+        tr:hover {
+          background: #f9fafb;
+        }
+      }
+    }
+    
+    &.card-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      
+      .day-card {
+        background: #f9fafb;
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        &.goal-met {
+          background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(5, 150, 105, 0.05));
+          border-color: rgba(5, 150, 105, 0.2);
+        }
+        
+        .card-date {
+          font-size: 0.875rem;
+          color: #6b7280;
+          font-weight: 600;
+          margin-bottom: 12px;
+        }
+        
+        .card-value {
+          margin-bottom: 8px;
+          
+          .sleep-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            display: block;
+          }
+          
+          .unit {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+          }
+        }
+        
+        .card-goal {
+          font-size: 0.875rem;
+          color: #6b7280;
+          margin-bottom: 12px;
+        }
+        
+        .card-status {
+          .success-icon {
+            color: #059669;
+            font-size: 1.5rem;
+          }
+          
+          .pending-icon {
+            color: #dc2626;
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sleep-main {
+    padding: 16px;
+  }
+  
+  .sleep-header .stats-card {
+    padding: 20px;
+    gap: 20px;
+    
+    .stat-item .stat-value {
+      font-size: 1.5rem;
+    }
+    
+    .progress-ring {
+      width: 60px;
+      height: 60px;
+      
+      .progress-circle::before {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .progress-text {
+        font-size: 0.875rem;
+      }
+    }
+  }
+  
+  .add-sleep-card,
+  .sleep-history-card {
+    padding: 24px;
+  }
+  
+  .sleep-history-card .history-content.card-view {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    
+    .day-card {
+      padding: 16px;
+      
+      .card-value .sleep-amount {
+        font-size: 1.5rem;
+      }
+    }
+  }
+} 
+
+td {
+  text-align: center !important;
+}

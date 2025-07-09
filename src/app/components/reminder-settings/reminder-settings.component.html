@@ -1,0 +1,89 @@
+<div class="reminder-settings-figma">
+  <div class="reminder-header">
+    <h1>Reminder Settings</h1>
+  </div>
+  <div class="notification-status" [ngClass]="notificationStatus">
+    <mat-icon *ngIf="notificationStatus === 'active'" color="primary">notifications_active</mat-icon>
+    <mat-icon *ngIf="notificationStatus === 'blocked'" color="warn">notifications_off</mat-icon>
+    <mat-icon *ngIf="notificationStatus === 'pending'">notifications</mat-icon>
+    <span>{{ notificationMessage }}</span>
+  </div>
+  <form [formGroup]="reminderForm" (ngSubmit)="saveSettings()">
+    <div class="reminder-cards">
+      <!-- Water Intake Reminder -->
+      <mat-card class="reminder-card">
+        <div class="reminder-row">
+          <div>
+            <div class="reminder-title">Water Intake Reminders</div>
+            <div class="reminder-desc">Get notified throughout the day to stay hydrated</div>
+          </div>
+          <mat-slide-toggle [formControl]="getControl('water.enabled')" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="reminder-row" *ngIf="reminderForm.get('water.enabled')?.value">
+          <div class="reminder-label">Remind every:</div>
+          <mat-form-field appearance="outline" class="reminder-interval-field">
+            <mat-select [formControl]="getControl('water.interval')">
+              <mat-option *ngFor="let h of waterIntervals" [value]="h">{{ h }} hour{{ h > 1 ? 's' : '' }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <!-- Exercise Reminder -->
+      <mat-card class="reminder-card">
+        <div class="reminder-row">
+          <div>
+            <div class="reminder-title">Exercise Reminders</div>
+            <div class="reminder-desc">Get reminded to move and stay active</div>
+          </div>
+          <mat-slide-toggle [formControl]="getControl('exercise.enabled')" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="reminder-row" *ngIf="reminderForm.get('exercise.enabled')?.value">
+          <div class="reminder-label">Select time:</div>
+          <mat-form-field appearance="outline" class="reminder-time-field">
+            <input matInput type="time" [formControl]="getControl('exercise.time')">
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <!-- Sleep Reminder -->
+      <mat-card class="reminder-card">
+        <div class="reminder-row">
+          <div>
+            <div class="reminder-title">Sleep Reminders</div>
+            <div class="reminder-desc">Get reminded to prepare for bed</div>
+          </div>
+          <mat-slide-toggle [formControl]="getControl('sleep.enabled')" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="reminder-row" *ngIf="reminderForm.get('sleep.enabled')?.value">
+          <div class="reminder-label">Select time:</div>
+          <mat-form-field appearance="outline" class="reminder-time-field">
+            <input matInput type="time" [formControl]="getControl('sleep.time')">
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <!-- Mood Check-in Reminder -->
+      <mat-card class="reminder-card">
+        <div class="reminder-row">
+          <div>
+            <div class="reminder-title">Mood Check-in Reminders</div>
+            <div class="reminder-desc">Get reminded to log your mood</div>
+          </div>
+          <mat-slide-toggle [formControl]="getControl('mood.enabled')" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="reminder-row" *ngIf="reminderForm.get('mood.enabled')?.value">
+          <div class="reminder-label">Select time:</div>
+          <mat-form-field appearance="outline" class="reminder-time-field">
+            <input matInput type="time" [formControl]="getControl('mood.time')">
+          </mat-form-field>
+        </div>
+      </mat-card>
+    </div>
+    <div class="reminder-footer">
+      <button mat-raised-button color="primary" class="save-btn" type="submit">
+        Save Settings
+      </button>
+    </div>
+  </form>
+</div>

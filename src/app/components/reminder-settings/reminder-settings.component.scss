@@ -1,0 +1,145 @@
+.reminder-settings-figma {
+  background: #f7f8fa;
+  min-height: 100vh;
+  padding: 40px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reminder-header {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 24px;
+  h1 {
+    color: #4285f4;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    letter-spacing: 0.5px;
+  }
+}
+
+.notification-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #f0f4ff;
+  color: #2563eb;
+  box-shadow: 0 2px 8px 0 rgba(66,133,244,0.06);
+  &.active {
+    background: #e8f5e9;
+    color: #388e3c;
+  }
+  &.blocked {
+    background: #fff3f3;
+    color: #e53935;
+  }
+  &.pending {
+    background: #f0f4ff;
+    color: #2563eb;
+  }
+  mat-icon {
+    font-size: 1.5rem;
+  }
+}
+
+// Polish card and form spacing
+.reminder-cards {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.reminder-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px 0 rgba(66,133,244,0.08);
+  padding: 28px 28px 12px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #e0e3eb;
+}
+
+.reminder-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.reminder-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+.reminder-desc {
+  font-size: 1rem;
+  color: #7b7b93;
+  font-weight: 400;
+}
+
+.reminder-label {
+  font-size: 1rem;
+  color: #7b7b93;
+  margin-right: 12px;
+  min-width: 110px;
+}
+
+.reminder-interval-field, .reminder-time-field {
+  min-width: 120px;
+  width: 140px;
+}
+
+mat-slide-toggle {
+  --mdc-switch-selected-track-color: #4285f4;
+  --mdc-switch-selected-thumb-color: #4285f4;
+  --mdc-switch-selected-focus-track-color: #4285f4;
+  --mdc-switch-selected-hover-track-color: #4285f4;
+  --mdc-switch-selected-pressed-track-color: #4285f4;
+}
+
+.reminder-footer {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 36px 0 44px 0;
+}
+
+.save-btn {
+  background: #4285f4;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 14px 38px;
+  box-shadow: 0 2px 8px 0 rgba(66,133,244,0.08);
+  transition: background 0.2s;
+}
+.save-btn:hover {
+  background: #2563eb;
+}
+
+@media (max-width: 700px) {
+  .reminder-header, .reminder-cards, .reminder-footer {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+  .reminder-settings-figma {
+    padding: 16px 0 0 0;
+  }
+  .reminder-card {
+    padding: 18px 8px 8px 8px;
+  }
+}
